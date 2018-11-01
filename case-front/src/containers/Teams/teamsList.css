@@ -1,0 +1,28 @@
+.team-list {
+  max-width: 1000px;
+  width: 1000px;
+  margin: 2rem auto;
+}
+
+.team-list-item {
+  width: 100%;
+  background: #013D7C;
+  list-style: none;
+  margin-top: 1rem;
+  border-radius: 5px;
+}
+
+.team-list-item:hover {
+  opacity: .7;
+}
+
+.team-list-item a {
+  display: block;
+  width: 100%;
+  color: white;
+  text-decoration: none;
+  text-transform: uppercase;
+  padding: 1rem;
+  font-weight: 700;
+  font-size: 2rem;
+}
