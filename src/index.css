@@ -1,0 +1,116 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Open Sans', sans-serif;
+}
+
+body {
+  width: 100%;
+  height: 100vh;
+}
+
+h1 {
+  color:white;
+  text-align: center;
+  border-bottom: 2px solid #57c4d0;
+ padding: 10px;
+}
+
+.admin-page {
+  width: 100%;
+  min-height: 100vh;
+  background: #ecf0f1;
+  display: grid;
+  grid-template-columns: minmax(300px, auto) 1fr;
+}
+
+.admin-menu {
+  background: #2d3436;
+  padding-top: 2rem;
+  margin: 0;
+}
+
+.admin-menu li {
+  text-align: center;
+  padding: 1rem;
+}
+
+.admin-menu button {
+  color: white;
+  background: none;
+  border: none;
+  font-size: 2rem;
+}
+
+.search {
+  float: right;
+  padding: .5rem;
+}
+
+.admin-main-container {
+  padding: 5rem;
+}
+
+.admin-dashboard h1 {
+  border-bottom: 2px solid #2d3436;
+}
+
+.admin-dashboard-container {
+  height: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: auto 1fr;
+}
+
+.admin-dashboard-stat {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  font-size: 12rem;
+}
+
+.admin-dashboard-stat h2 {
+  margin: 0;
+}
+
+.users-stat {
+  color: #0984e3;
+}
+
+.matches-stat {
+  color: #00b894;
+}
+
+article p {
+  margin-bottom: -10rem;
+}
+
+.admin-dashboard-stat img, .admin-dashboard-stat h2 {
+  display: inline;
+  vertical-align:middle;
+}
+
+.player-menu {
+  background: #646F72;
+}
+
+.players-stat{
+  color: #9709D7;
+}
+
+.teams-stat{
+  color: #FFD100;
+}
+
+.seasons-stat{
+  color: #14B508;
+}
+
+.goals-stat{
+  color: #B31515;
+}
+
+.placeholder{
+  margin:auto;
+}
