@@ -1,3 +1,10 @@
 {
-    "Welcome to React": "Velkommen til react og react-i18next"
+    "News": "Siste nyheter",
+    "Home": "Hjem",
+    "Teams": "Lag",
+    "Players": "Spillere",
+    "Matches": "Kamper"
+
+
   }
+

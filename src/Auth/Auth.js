@@ -1,53 +1,70 @@
+/* eslint no-restricted-globals: 0 */
+
 import auth0 from 'auth0-js';
-import history from '../history';
+import jwtDecode from 'jwt-decode';
+
+const LOGIN_SUCCESS_PAGE = '/';
+const LOGIN_FAILURE_PAGE = '/';
+const LOGOUT_PAGE = '/';
 
 export default class Auth {
 
+  constructor() {
+    this.login = this.login.bind(this);
+  }
+
+  userProfile;
+
+
   auth0 = new auth0.WebAuth({
     domain: 'case-login.eu.auth0.com',
-    clientID: 'YfuTC4MD81TZQOte3wP0kbqXK7GntI88',
-    redirectUri:  'http://localhost:3000/callback',
-    audience: 'https://case-login.eu.auth0.com/userinfo',
+    clientID: 'obcpKGK8DYmH8y1X4NwCaDjMtPswC6Xz',
+    // redirectUri: 'https://ifl-user.herokuapp.com/callback',
+    redirectUri: 'http://localhost:3000/callback',
     responseType: 'token id_token',
-    scope: 'openid'
-  });
+    scope: 'openid profile'
+  })
 
-  login = () => {
+  login() {
     this.auth0.authorize();
   }
 
-  handleAuthentication = () => {
-    this.auth0.parseHash((err, authResult) => {
-      if (authResult && authResult.accessToken && authResult.idToken) {
-        this.setSession(authResult);
-        history.replace('/home');
+  handleAuthentication() {
+    this.auth0.parseHash((err, authResults) => {
+      if (authResults && authResults.accessToken && authResults.idToken) {
+        let expiresAt = JSON.stringify((authResults.expiresIn) * 1000 + new Date().getTime());
+        localStorage.setItem("access_token", authResults.accessToken);
+        localStorage.setItem("id_token", authResults.idToken);
+        localStorage.setItem("expires_at", expiresAt);
+        location.hash = '';
+        location.pathname = LOGIN_SUCCESS_PAGE;
       } else if (err) {
-        history.replace('/home');
+        location.pathname = LOGIN_FAILURE_PAGE;
         console.log(err);
       }
-    });
+    })
   }
 
-  // Sets user details in localStorage
-  setSession = (authResult) => {
-    let expiresAt = JSON.stringify((authResult.expiresIn * 1000) + new Date().getTime());
-    localStorage.setItem('access_token', authResult.accessToken);
-    localStorage.setItem('id_token', authResult.idToken);
-    localStorage.setItem('expires_at', expiresAt);
-    history.replace('/home');
+  isAuthenticated() {
+    let expiresAt = JSON.parse(localStorage.getItem("expires_at"));
+    return new Date().getTime() < expiresAt;
   }
 
-  // removes user details from localStorage
-  logout = () => {
+  logout() {
+    // Clear Access Token and ID Token from local storage
     localStorage.removeItem('access_token');
     localStorage.removeItem('id_token');
     localStorage.removeItem('expires_at');
-    history.replace('/home');
+    // navigate to the home route
+    location.pathname = LOGOUT_PAGE;
   }
 
-  // checks if the user is authenticated
-  isAuthenticated = () => {
-    let expiresAt = JSON.parse(localStorage.getItem('expires_at'));
-    return new Date().getTime() < expiresAt;
+  getProfile() {
+    if (localStorage.getItem("id_token")) {
+      return jwtDecode(localStorage.getItem("id_token"));
+    } else {
+      return {};
+    }
   }
+
 }
